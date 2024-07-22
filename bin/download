@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -e
+
+# check ASDF environment variables
+[ -n "$ASDF_INSTALL_VERSION" ] || (echo 'Missing ASDF_INSTALL_VERSION' >&2 && exit 1)
+[ -n "$ASDF_DOWNLOAD_PATH" ] || (echo 'Missing ASDF_DOWNLOAD_PATH' >&2 && exit 1)
+
+# get archictecture for download
+case "$(uname -m)" in
+	"aarch64")
+		ARCH="arm64"
+		;;
+	"arm64")
+		ARCH="arm64"
+		;;
+	"x86_64")
+		ARCH="amd64"
+		;;
+	"i386")
+		ARCH="386"
+		;;
+	*)
+		echo "Unknown architecture: $(uname -m)" >&2
+		exit 1
+		;;
+esac
+
+https://github.com/StackExchange/dnscontrol/releases/download/v4.12.5/dnscontrol-4.12.5.amd64.deb
+
+case "$(uname -s)" in
+	"Darwin")
+		URLS=(
+			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol-${ASDF_INSTALL_VERSION}_darwin_all.tar.gz"
+		)
+		;;
+	"Linux")
+		URLS=(
+			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol-${ASDF_INSTALL_VERSION}_linux_${ARCH}.tar.gz"
+		)
+		;;
+esac
+
+for URL in "${URLS[@]}"; do
+	echo "Trying to download tarball from ${URL}" >&2
+	{ curl -fL -o "${ASDF_DOWNLOAD_PATH}/dnscontrol-${ASDF_INSTALL_VERSION}.tar.gz" "$URL" && break; } || echo "Trying next URL" >&2
+done
