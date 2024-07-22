@@ -28,12 +28,12 @@ esac
 case "$(uname -s)" in
 	"Darwin")
 		URLS=(
-			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol-${ASDF_INSTALL_VERSION}_darwin_all.tar.gz"
+			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol_${ASDF_INSTALL_VERSION}_darwin_all.tar.gz"
 		)
 		;;
 	"Linux")
 		URLS=(
-			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol-${ASDF_INSTALL_VERSION}_linux_${ARCH}.tar.gz"
+			"https://github.com/StackExchange/dnscontrol/releases/download/v${ASDF_INSTALL_VERSION}/dnscontrol_${ASDF_INSTALL_VERSION}_linux_${ARCH}.tar.gz"
 		)
 		;;
 esac
